@@ -33,13 +33,14 @@ echo -e "\n"
 #echo "Налаштування проксі-сервера прописані у .bashrc"
 #echo -e "#########Змінено Я#########\nexport http_proxy=\"$PURL:$PPRT/\"\nexport https_proxy=\"$PURL:$PPRT/\"\nexport ftp_proxy=\"$PURL:$PPRT/\"" >> ~/.bashrc
 echo "Налаштування проксі-сервера прописані у /etc/environment"
-sudo sh -c "echo -e '\n#########Змінено Я#########\nhttp_proxy=\"$PURL:$PPRT/\"\nhttps_proxy=\"$PURL:$PPRT/\"\nftp_proxy=\"$PURL:$PPRT/\"\nHTTP_PROXY=\"$PURL:$PPRT/\"\nHTTPS_PROXY=\"$PURL:$PPRT/\"\nFTP_PROXY=\"$PURL:$PPRT/\"' >> /etc/environment"
+sudo sh -c "echo '\n#########Змінено Я#########\nhttp_proxy=\"$PURL:$PPRT/\"\nhttps_proxy=\"$PURL:$PPRT/\"\nftp_proxy=\"$PURL:$PPRT/\"\nHTTP_PROXY=\"$PURL:$PPRT/\"\nHTTPS_PROXY=\"$PURL:$PPRT/\"\nFTP_PROXY=\"$PURL:$PPRT/\"' >> /etc/environment"
 echo "Налаштування проксі-сервера прописані у /etc/wgetrc"
 sudo sh -c "echo '\n#########Змінено Я#########\nhttps_proxy = $PURL:$PPRT/\nhttp_proxy = $PURL:$PPRT/\nftp_proxy = $PURL:$PPRT/\nuse_proxy = on' >> /etc/wgetrc"
 echo "Налаштування проксі-сервера прописані у /etc/sudoers"
 sudo sh -c "echo '\n#########Змінено Я#########\nDefaults env_keep += \"http_proxy https_proxy ftp_proxy all_proxy no_proxy\"' >> /etc/sudoers"
 echo -e "Налаштування проксі-сервера прописані у /etc/apt/apt.conf.d/02proxy\n"
 sudo sh -c "echo '\n#########Змінено Я#########\nAcquire::http::Proxy \"$PURL:$PPRT\";' > /etc/apt/apt.conf.d/02proxy"
+;;
 2)
 clear
 echo -e "\n"
@@ -71,6 +72,7 @@ echo -e "\n"
 echo "Вибір додаткових репозиторіїв"
 echo -e "\n"
 sudo apt -y install software-properties-common python3-software-properties python-software-properties
+sudo apt update
 sudo add-apt-repository -y $(zenity --list --text="ВИБРАТИ РЕПОЗИТОРІЙ ДЛЯ ПІДКЛЮЧЕННЯ:" \
     --checklist --multiple --column "Вибір" --column "Репозиторій" --separator=" " --column "Опис"\
     FALSE "ppa:atareao/atareao" "my weather indicator"\
