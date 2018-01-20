@@ -25,22 +25,55 @@ clear
 cp ~/.bashrc ~/.bashrc.bak
 sudo cp /etc/sudoers /etc/sudoers.bak
 sudo cp /etc/wgetrc /etc/wgetrc.bak
-echo -n "Ввести проксі у форматі http://проксі:порт : "; read PURL
+echo -n "Ввести проксі у форматі http://проксі : "; read PURL
+echo -n "Ввести порт проксі : "; read PPRT
 echo "Налаштування проксі-сервера прописані у .bashrc"
-echo -e "#########Змінено Я#########\nexport http_proxy=\"$PURL/\"\nexport https_proxy=\"$PURL/\"\nexport ftp_proxy=\"$PURL/\"" >> ~/.bashrc
+echo -e "#########Змінено Я#########\nexport http_proxy=\"$PURL:$PPRT/\"\nexport https_proxy=\"$PURL:$PPRT/\"\nexport ftp_proxy=\"$PURL:$PPRT/\"" >> ~/.bashrc
 echo "Налаштування проксі-сервера прописані у /etc/wgetrc"
-sudo sh -c "echo '\n#########Змінено Я#########\nhttps_proxy = $PURL/\nhttp_proxy = $PURL/\nftp_proxy = $PURL/\nuse_proxy = on' >> /etc/wgetrc"
+sudo sh -c "echo '\n#########Змінено Я#########\nhttps_proxy = $PURL:$PPRT/\nhttp_proxy = $PURL:$PPRT/\nftp_proxy = $PURL:$PPRT/\nuse_proxy = on' >> /etc/wgetrc"
 echo "Налаштування проксі-сервера прописані у /etc/sudoers"
 sudo sh -c "echo '\n#########Змінено Я#########\nDefaults env_keep += \"http_proxy https_proxy ftp_proxy all_proxy no_proxy\"' >> /etc/sudoers"
 echo -e "Налаштування проксі-сервера прописані у /etc/apt/apt.conf.d/02proxy\n"
-sudo sh -c "echo '\n#########Змінено Я#########\nAcquire::http::Proxy \"$PURL\";' > /etc/apt/apt.conf.d/02proxy"
+sudo sh -c "echo '\n#########Змінено Я#########\nAcquire::http::Proxy \"$PURL:$PPRT\";' > /etc/apt/apt.conf.d/02proxy"
+#firefox && killall firefox
+#cd `find ~/.mozilla/firefox/ -name *.default`
+#cp prefs.js prefs.js.old
+#echo -e "Налаштування проксі-сервера прописані у Firefox\n"
+#echo -e '\nuser_pref(\"network.proxy.ftp\", \"$PURL\");' >> prefs.js
+#echo -e '\nuser_pref(\"network.proxy.ftp_port\", $PPRT);' >> prefs.js
+#echo -e '\nuser_pref(\"network.proxy.http\", \"$PURL\");' >> prefs.js
+#echo -e '\nuser_pref(\"network.proxy.http_port\", $PPRT);' >> prefs.js
+#echo -e '\nuser_pref(\"network.proxy.socks\", \"$PURL\");' >> prefs.js
+#echo -e '\nuser_pref(\"network.proxy.socks_port\", $PPRT);' >> prefs.js
+#echo -e '\nuser_pref(\"network.proxy.ssl\", \"$PURL\");' >> prefs.js
+#echo -e '\nuser_pref(\"network.proxy.ssl_port\", $PPRT);' >> prefs.js
+#echo -e '\nuser_pref(\"network.proxy.type\", 1);' >> prefs.js
+#echo -e '\nuser_pref("network.proxy.share_proxy_settings", true);' >> prefs.js
+#cd -
+echo -e "Налаштування проксі-сервера прописані у DConf\n"
+sudo dbus-launch gsettings set org.gnome.system.proxy.ftp host \'$PURL\'
+sudo dbus-launch gsettings set org.gnome.system.proxy.ftp port $PPRT
+sudo dbus-launch gsettings set org.gnome.system.proxy.http host \'$PURL\'
+sudo dbus-launch gsettings set org.gnome.system.proxy.http port $PPRT
+sudo dbus-launch gsettings set org.gnome.system.proxy.https host \'$PURL\'
+sudo dbus-launch gsettings set org.gnome.system.proxy.https port $PPRT
+sudo dbus-launch gsettings set org.gnome.system.proxy.socks host \'$PURL\'
+sudo dbus-launch gsettings set org.gnome.system.proxy.socks port $PPRT
+sudo dbus-launch gsettings set org.gnome.system.proxy mode 'manual'
+sudo dbus-launch gsettings set org.gnome.system.proxy use-same-proxy true
+clear
+echo -e "Налаштування проксі-сервера які прописані у DConf та використовуються програмами з GUI,\nнаприклад Firefox, як правило вступають в силу після перезавантаження\n"
 ;;
 2)
 clear
 mv ~/.bashrc.bak ~/.bashrc
 sudo mv /etc/sudoers.bak /etc/sudoers
 sudo mv /etc/wgetrc.bak /etc/wgetrc
+#cd `find ~/.mozilla/firefox/ -name *.default`
+#mv prefs.js.old prefs.js
+#cd -
 sudo rm -r /etc/apt/apt.conf.d/02proxy
+sudo dbus-launch gsettings set org.gnome.system.proxy mode 'none'
 ;;
 3)
 echo -e "\n"
