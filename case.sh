@@ -33,7 +33,7 @@ echo -e "\n"
 #echo "Налаштування проксі-сервера прописані у .bashrc"
 #echo -e "#########Змінено Я#########\nexport http_proxy=\"$PURL:$PPRT/\"\nexport https_proxy=\"$PURL:$PPRT/\"\nexport ftp_proxy=\"$PURL:$PPRT/\"" >> ~/.bashrc
 echo "Налаштування проксі-сервера прописані у /etc/environment"
-sudo sh -c "echo -e '\n#########Змінено Я#########\nexport http_proxy=\"$PURL:$PPRT/\"\nexport https_proxy=\"$PURL:$PPRT/\"\nexport ftp_proxy=\"$PURL:$PPRT/\"' >> /etc/environment"
+sudo sh -c "echo -e '\n#########Змінено Я#########\nhttp_proxy=\"$PURL:$PPRT/\"\nhttps_proxy=\"$PURL:$PPRT/\"\nftp_proxy=\"$PURL:$PPRT/\"\nHTTP_PROXY=\"$PURL:$PPRT/\"\nHTTPS_PROXY=\"$PURL:$PPRT/\"\nFTP_PROXY=\"$PURL:$PPRT/\"' >> /etc/environment"
 echo "Налаштування проксі-сервера прописані у /etc/wgetrc"
 sudo sh -c "echo '\n#########Змінено Я#########\nhttps_proxy = $PURL:$PPRT/\nhttp_proxy = $PURL:$PPRT/\nftp_proxy = $PURL:$PPRT/\nuse_proxy = on' >> /etc/wgetrc"
 echo "Налаштування проксі-сервера прописані у /etc/sudoers"
