@@ -132,8 +132,8 @@ echo "Встановлення teamviewer"
 echo -e "\n"
 sudo dpkg --add-architecture i386
 sudo apt update
-wget https://download.teamviewer.com/download/teamviewer_i386.deb
-sudo dpkg -i teamviewer_i386.deb
+wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+sudo dpkg -i teamviewer_amd64.deb
 sudo apt -y install -f
 ;;
 0)
