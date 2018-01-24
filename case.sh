@@ -72,7 +72,6 @@ echo -e "\n"
 echo "Вибір додаткових репозиторіїв"
 echo -e "\n"
 sudo apt -y install software-properties-common python3-software-properties python-software-properties
-sudo apt update
 sudo add-apt-repository -y $(zenity --list --text="ВИБРАТИ РЕПОЗИТОРІЙ ДЛЯ ПІДКЛЮЧЕННЯ:" \
     --checklist --multiple --column "Вибір" --column "Репозиторій" --separator=" " --column "Опис"\
     FALSE "ppa:atareao/atareao" "my weather indicator"\
@@ -80,7 +79,7 @@ sudo add-apt-repository -y $(zenity --list --text="ВИБРАТИ РЕПОЗИТ
     FALSE "ppa:otto-kesselgulasch/gimp-edge" "gimp beta"\
     FALSE "ppa:alessandro-strada/ppa" "google drive"\
     --height=750 --width=700)
-sudo apt update && sudo apt -y dist-upgrade
+sudo apt update
 ;;
 6)
 clear
