@@ -7,7 +7,7 @@ function Show-Menu {
     )
     Clear-Host
     Write-Host "================ $Title ================"
-    
+
     Write-Host "1: Press '1' for install Choco."
     Write-Host "2: Press '2' for install Software."
     Write-Host "3: Press '3' to check for update."
@@ -31,8 +31,8 @@ do
     exit
     } '2' {
     choco install $(.\zenity.exe --height=800 --width=800 --list --text="<b>Select the software to install:</b>" \ --checklist --multiple --hide-column=2 --column "Check" --column "Software" --separator=";" --column "Name" --column "Discription" `
-    "7zip2" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
-    "Firefox2" "Mozilla Firefox" "Mozilla Firefox" \ `
+    "7zip" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
+    "Firefox" "Mozilla Firefox" "Mozilla Firefox" \ `
     "adobereader" "Adobe Reader" "View, print, sign, and annotate PDF files" \ `
     "googlechrome" "Google Chrome" "Google Chrome" \ `
     "vlc" "VLC media player" "VLC Media Player" \ `
@@ -64,8 +64,8 @@ do
     choco update all
     } '5' {
     choco uninstall $(.\zenity.exe --height=500 --width=700 --list --text="<b>Select the software to install:</b>" \ --checklist --multiple --hide-column=2 --column "Check" --column "Software" --separator=";" --column "Name" --column "Discription" `
-    "7zip2" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
-    "Firefox2" "Mozilla Firefox" "Mozilla Firefox" \ `
+    "7zip" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
+    "Firefox" "Mozilla Firefox" "Mozilla Firefox" \ `
     "adobereader" "Adobe Reader" "View, print, sign, and annotate PDF files" \ `
     "googlechrome" "Google Chrome" "Google Chrome" \ `
     "vlc" "VLC media player" "VLC Media Player" \ `
