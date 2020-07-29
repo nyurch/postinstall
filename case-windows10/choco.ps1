@@ -7,13 +7,15 @@ function Show-Menu {
     )
     Clear-Host
     Write-Host "================ $Title ================"
-
-    Write-Host "1: Press '1' for install Choco."
-    Write-Host "2: Press '2' for install Software."
-    Write-Host "3: Press '3' to check for update."
-    Write-Host "4: Press '4' for update Software."
-    Write-Host "5: Press '5' for uninstall Software."
-    Write-Host "Q: Press 'Q' to quit."
+    
+    Write-Host "1: Install choco."
+    Write-Host "2: Install software."
+    Write-Host "3: Check software update."
+    Write-Host "4: Update software."
+    Write-Host "5: Uninstall software."
+    Write-Host "6: Disable hibernation."
+    Write-Host "7: Interface tweaks."
+    Write-Host "Q: Quit."
 
     Write-Host "==========================================="
 }
@@ -64,8 +66,8 @@ do
     choco update all
     } '5' {
     choco uninstall $(.\zenity.exe --height=500 --width=700 --list --text="<b>Select the software to install:</b>" \ --checklist --multiple --hide-column=2 --column "Check" --column "Software" --separator=";" --column "Name" --column "Discription" `
-    "7zip" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
-    "Firefox" "Mozilla Firefox" "Mozilla Firefox" \ `
+    "7zip2" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
+    "Firefox2" "Mozilla Firefox" "Mozilla Firefox" \ `
     "adobereader" "Adobe Reader" "View, print, sign, and annotate PDF files" \ `
     "googlechrome" "Google Chrome" "Google Chrome" \ `
     "vlc" "VLC media player" "VLC Media Player" \ `
@@ -91,6 +93,11 @@ do
 	"fsviewer" "FastStone Image Viewer" "Fast, stable, user-friendly image browser, converter and editor" \ `
 	"steam" "Steam" "Steam Client by Valve Corporation" \ `
 	"microsoft-teams.install" "Microsoft Teams" "Helps your team work better together") -y
+    } '6' {
+    powercfg -h off
+    } '7' {
+    reg import first_run.reg
+	cmd /c del /f /q %systemdrive%\users\%username%\desktop\"Microsoft Edge.lnk"
     }
     }
     pause
