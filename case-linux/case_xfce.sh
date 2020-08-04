@@ -14,7 +14,7 @@ echo -e "\t$(tput bold)$(tput setaf 3)[4]$(tput sgr0) Очистити кеш ap
 echo -e "\t$(tput bold)$(tput setaf 3)[5]$(tput sgr0) Вибір програм для встановлення(ppa)           "
 echo -e "\t$(tput bold)$(tput setaf 3)[6]$(tput sgr0) Вибір програм для встановлення(snap)          "
 echo -e "\t$(tput bold)$(tput setaf 3)[7]$(tput sgr0) Установка Anydesk                             "
-echo -e "\t$(tput bold)$(tput setaf 3)[8]$(tput sgr0) bash з блек-джеком                            "
+echo -e "\t$(tput bold)$(tput setaf 3)[8]$(tput sgr0) Інтерфейс та bash з блек-джеком               "
 echo -e "\t$(tput bold)$(tput setaf 3)[0]$(tput sgr0) Вихід                                         "
 echo -e "$(tput bold)$(tput setaf 1)===========================================================\n$(tput sgr0)"
 echo -n "$(tput bold)$(tput setaf 2)Обрати варіант:$(tput sgr0) "; read doing
@@ -124,6 +124,12 @@ sudo apt install -y anydesk
 ;;
 8)
 clear
+echo -e "\n"
+echo -e "Налаштування інтерфейсу\n"
+sudo apt install faenza-icon-theme
+xfconf-query -c xfce4-desktop -p /desktop-icons/file-icons/show-home -t 'bool' -s 'false'
+xfconf-query -c xsettings -p /Net/IconThemeName -s "Faenza-Radiance"
+xfconf-query -c xsettings -pxfconf-query -c xsettings -p /Net/ThemeName -s "Mint-X-Orange"
 echo -e "\n"
 echo -e "Налаштування bash\n"
 sed -i '$ a \\nPromt color\\nexport PS1="\\[$(tput bold)$(tput setab 7)$(tput setaf 5)\\][\\D{%m/%d/%Y} \\A] \\[$(tput setaf 1)\\]\\u@\\h:\\[$(tput setaf 4)\\]\\w $ \\[$(tput sgr0)\\] "' ~/.bashrc
