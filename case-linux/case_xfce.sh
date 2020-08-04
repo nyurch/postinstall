@@ -78,6 +78,7 @@ sudo apt install -y $(zenity --list --text="ВИБРАТИ ПРОГРАМИ ДЛ
     FALSE "clipit" "Lightweight GTK+ Clipboard Manager"\
     FALSE "dropbox" "File hosting service"\
     FALSE "easytag" "Tag editor for MP3, Ogg Vorbis files and more"\
+    FALSE "faenza-icon-theme" "Faenza icon theme"\
     FALSE "gimp" "An image manipulation and paint program"\
     FALSE "glances" "Curses-based monitoring tool"\
     FALSE "gnome-nettool" "Network information tool for GNOME"\
@@ -125,7 +126,7 @@ sudo apt install -y anydesk
 clear
 echo -e "\n"
 echo -e "Налаштування bash\n"
-sed -i '$ a \\nexport PS1="\\[$(tput bold)$(tput setab 7)$(tput setaf 5)\\][\\D{%m/%d/%Y} \\A] \\[$(tput setaf 1)\\]\\u@\\h:\\[$(tput setaf 4)\\]\\w $ \\[$(tput sgr0)\\] "' ~/.bashrc
+sed -i '$ a \\nPromt color\\nexport PS1="\\[$(tput bold)$(tput setab 7)$(tput setaf 5)\\][\\D{%m/%d/%Y} \\A] \\[$(tput setaf 1)\\]\\u@\\h:\\[$(tput setaf 4)\\]\\w $ \\[$(tput sgr0)\\] "' ~/.bashrc
 ;;
 0)
 clear && exit 0
