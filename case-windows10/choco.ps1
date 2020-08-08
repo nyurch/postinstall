@@ -7,7 +7,7 @@ function Show-Menu {
     )
     Clear-Host
     Write-Host "================ $Title ================"
-    
+
     Write-Host "1: Install choco."
     Write-Host "2: Install software."
     Write-Host "3: Check software update."
@@ -35,6 +35,7 @@ do
     choco install $(.\zenity.exe --height=800 --width=800 --list --text="<b>Select the software to install:</b>" \ --checklist --multiple --hide-column=2 --column "Check" --column "Software" --separator=";" --column "Name" --column "Discription" `
     "7zip" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
     "Firefox" "Mozilla Firefox" "Mozilla Firefox" \ `
+    "microsoft-edge" "Microsoft Edge" "Microsoft Edge" \ `
     "adobereader" "Adobe Reader" "View, print, sign, and annotate PDF files" \ `
     "googlechrome" "Google Chrome" "Google Chrome" \ `
     "vlc" "VLC media player" "VLC Media Player" \ `
@@ -47,6 +48,8 @@ do
 	"paint.net" "Paint.net" "Image and photo manipulation software" \ `
 	"greenshot" "GreenShot" "Light-weight screenshot software tool" \ `
 	"anydesk.install" "Anydesk" "Remote desktop software" \ `
+	"office365business" "Office 365" "Office 365 Business" \ `
+	"sysinternals" "Sysinternals Suite" "Troubleshooting Utilities have been rolled up into a single suite of tools." \ `
 	"pidgin" "Pidgin" "Chat program which lets you log into accounts on multiple chat networks simultaneously" \ `
 	"telegram" "Telegram" "Cloud-based synchronized messaging app with a focus on speed and security" \ `
 	"spotify" "Spotify" "Spotify is a new way to listen to music" \ `
@@ -65,9 +68,10 @@ do
     } '4' {
     choco update all
     } '5' {
-    choco uninstall $(.\zenity.exe --height=500 --width=700 --list --text="<b>Select the software to install:</b>" \ --checklist --multiple --hide-column=2 --column "Check" --column "Software" --separator=";" --column "Name" --column "Discription" `
-    "7zip2" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
-    "Firefox2" "Mozilla Firefox" "Mozilla Firefox" \ `
+    choco uninstall $(.\zenity.exe --height=800 --width=800 --list --text="<b>Select the software to install:</b>" \ --checklist --multiple --hide-column=2 --column "Check" --column "Software" --separator=";" --column "Name" --column "Discription" `
+    "7zip" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
+    "Firefox" "Mozilla Firefox" "Mozilla Firefox" \ `
+    "microsoft-edge" "Microsoft Edge" "Microsoft Edge" \ `
     "adobereader" "Adobe Reader" "View, print, sign, and annotate PDF files" \ `
     "googlechrome" "Google Chrome" "Google Chrome" \ `
     "vlc" "VLC media player" "VLC Media Player" \ `
@@ -80,6 +84,8 @@ do
 	"paint.net" "Paint.net" "Image and photo manipulation software" \ `
 	"greenshot" "GreenShot" "Light-weight screenshot software tool" \ `
 	"anydesk.install" "Anydesk" "Remote desktop software" \ `
+	"office365business" "Office 365" "Office 365 Business" \ `
+	"sysinternals" "Sysinternals Suite" "Troubleshooting Utilities have been rolled up into a single suite of tools." \ `
 	"pidgin" "Pidgin" "Chat program which lets you log into accounts on multiple chat networks simultaneously" \ `
 	"telegram" "Telegram" "Cloud-based synchronized messaging app with a focus on speed and security" \ `
 	"spotify" "Spotify" "Spotify is a new way to listen to music" \ `
