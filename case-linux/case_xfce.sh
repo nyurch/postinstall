@@ -73,6 +73,7 @@ echo "Вибір програм для встановлення"
 echo -e "\n"
 sudo apt install -y $(zenity --list --text="ВИБРАТИ ПРОГРАМИ ДЛЯ ВСТАНОВЛЕННЯ:" \
     --checklist --multiple --column "Вибір" --column "Програма" --separator=" " --column "Опис"\
+    FALSE "alarm-clock-applet" "Fully-featured alarm clock"\
     FALSE "audacity" "Graphical cross-platform audio editor"\
     FALSE "calibre" "E-book converter and library management"\
     FALSE "clipit" "Lightweight GTK+ Clipboard Manager"\

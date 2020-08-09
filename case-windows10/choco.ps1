@@ -49,6 +49,7 @@ do
 	"greenshot" "GreenShot" "Light-weight screenshot software tool" \ `
 	"anydesk.install" "Anydesk" "Remote desktop software" \ `
 	"office365business" "Office 365" "Office 365 Business" \ `
+	"powertoys" "PowerToys" "Windows system utilities to maximize productivity" \ `
 	"sysinternals" "Sysinternals Suite" "Troubleshooting Utilities have been rolled up into a single suite of tools." \ `
 	"pidgin" "Pidgin" "Chat program which lets you log into accounts on multiple chat networks simultaneously" \ `
 	"telegram" "Telegram" "Cloud-based synchronized messaging app with a focus on speed and security" \ `
@@ -62,7 +63,8 @@ do
 	"cheatengine" "Cheat Engine" "Open source tool designed to help you modify single player games" \ `
 	"fsviewer" "FastStone Image Viewer" "Fast, stable, user-friendly image browser, converter and editor" \ `
 	"steam" "Steam" "Steam Client by Valve Corporation" \ `
-	"microsoft-teams.install" "Microsoft Teams" "Helps your team work better together") -y
+	"microsoft-teams.install" "Microsoft Teams" "Helps your team work better together" \ `
+	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") -y
     } '3' {
     choco outdated
     } '4' {
@@ -85,6 +87,7 @@ do
 	"greenshot" "GreenShot" "Light-weight screenshot software tool" \ `
 	"anydesk.install" "Anydesk" "Remote desktop software" \ `
 	"office365business" "Office 365" "Office 365 Business" \ `
+	"powertoys" "PowerToys" "Windows system utilities to maximize productivity" \ `
 	"sysinternals" "Sysinternals Suite" "Troubleshooting Utilities have been rolled up into a single suite of tools." \ `
 	"pidgin" "Pidgin" "Chat program which lets you log into accounts on multiple chat networks simultaneously" \ `
 	"telegram" "Telegram" "Cloud-based synchronized messaging app with a focus on speed and security" \ `
@@ -98,7 +101,8 @@ do
 	"cheatengine" "Cheat Engine" "Open source tool designed to help you modify single player games" \ `
 	"fsviewer" "FastStone Image Viewer" "Fast, stable, user-friendly image browser, converter and editor" \ `
 	"steam" "Steam" "Steam Client by Valve Corporation" \ `
-	"microsoft-teams.install" "Microsoft Teams" "Helps your team work better together") -y
+	"microsoft-teams.install" "Microsoft Teams" "Helps your team work better together" \ `
+	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") -y
     } '6' {
     powercfg -h off
     } '7' {
