@@ -33,7 +33,7 @@ do
     exit
     } '2' {
     choco install $(.\zenity.exe --height=800 --width=800 --list --text="<b>Select the software to install:</b>" \ --checklist --multiple --hide-column=2 --column "Check" --column "Software" --separator=";" --column "Name" --column "Discription" `
-    "7zip" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
+    "7zip.install" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
     "Firefox" "Mozilla Firefox" "Mozilla Firefox" \ `
     "microsoft-edge" "Microsoft Edge" "Microsoft Edge" \ `
     "adobereader" "Adobe Reader" "View, print, sign, and annotate PDF files" \ `
@@ -85,7 +85,7 @@ do
     choco update all
     } '5' {
     choco uninstall $(.\zenity.exe --height=800 --width=800 --list --text="<b>Select the software to install:</b>" \ --checklist --multiple --hide-column=2 --column "Check" --column "Software" --separator=";" --column "Name" --column "Discription" `
-    "7zip" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
+    "7zip.install" "7-Zip" "7-Zip is a file archiver with a high compression ratio" \ `
     "Firefox" "Mozilla Firefox" "Mozilla Firefox" \ `
     "microsoft-edge" "Microsoft Edge" "Microsoft Edge" \ `
     "adobereader" "Adobe Reader" "View, print, sign, and annotate PDF files" \ `
