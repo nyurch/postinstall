@@ -76,7 +76,7 @@ do
 	"xmind" "XMind" "XMind - Powerful Mind Mapping Software" \ `
 	"phonerlite" "PhonerLite" "Easy to use VoIP softphone with profile and contact management" \ `
 	"victoria" "Victoria HDD-SSD" "HDD/SSD diagnostics, research, testing program" \ `
-	"amd-ryzen-chipset" "AMD Ryzen Chipset Drivers" "" \ `
+	"amd-ryzen-chipset" "AMD Ryzen Chipset Drivers" "Drivers" \ `
 	"tightvnc" "TightVNC" "Remote control software" \ `
 	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") -y
     } '3' {
@@ -128,7 +128,7 @@ do
 	"xmind" "XMind" "XMind - Powerful Mind Mapping Software" \ `
 	"phonerlite" "PhonerLite" "Easy to use VoIP softphone with profile and contact management" \ `
 	"victoria" "Victoria HDD-SSD" "HDD/SSD diagnostics, research, testing program" \ `
-	"amd-ryzen-chipset" "AMD Ryzen Chipset Drivers" "" \ `
+	"amd-ryzen-chipset" "AMD Ryzen Chipset Drivers" "Drivers" \ `
 	"tightvnc" "TightVNC" "Remote control software" \ `
 	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") -y
     } '6' {
