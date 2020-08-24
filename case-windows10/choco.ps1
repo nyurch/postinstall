@@ -78,7 +78,7 @@ do
 	"victoria" "Victoria HDD-SSD" "HDD/SSD diagnostics, research, testing program" \ `
 	"amd-ryzen-chipset" "AMD Ryzen Chipset Drivers" "Drivers" \ `
 	"tightvnc" "TightVNC" "Remote control software" \ `
-	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") -y
+	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") --nocolor --limitoutput --no-progress -y
     } '3' {
     choco outdated
     } '4' {
@@ -130,7 +130,7 @@ do
 	"victoria" "Victoria HDD-SSD" "HDD/SSD diagnostics, research, testing program" \ `
 	"amd-ryzen-chipset" "AMD Ryzen Chipset Drivers" "Drivers" \ `
 	"tightvnc" "TightVNC" "Remote control software" \ `
-	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") -y
+	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") --nocolor --limitoutput --no-progress -y
     } '6' {
     powercfg -h off
     } '7' {
