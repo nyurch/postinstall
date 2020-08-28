@@ -13,8 +13,9 @@ function Show-Menu {
     Write-Host "3: Check software update."
     Write-Host "4: Update software."
     Write-Host "5: Uninstall software."
-    Write-Host "6: Disable hibernation."
-    Write-Host "7: Interface tweaks."
+    Write-Host "6: List cinstalled software."
+    Write-Host "7: Disable hibernation."
+    Write-Host "8: Interface tweaks."
     Write-Host "Q: Quit."
 
     Write-Host "==========================================="
@@ -132,8 +133,10 @@ do
 	"tightvnc" "TightVNC" "Remote control software" \ `
 	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") --nocolor --limitoutput --no-progress -y
     } '6' {
-    powercfg -h off
+    choco list -localonly
     } '7' {
+    powercfg -h off
+    } '8' {
     reg import first_run.reg
 	cmd /c del /f /q %systemdrive%\users\%username%\desktop\"Microsoft Edge.lnk"
     }
