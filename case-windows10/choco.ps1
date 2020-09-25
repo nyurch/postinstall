@@ -52,7 +52,7 @@ do
 	"rufus" "Rufus" "Create bootable USB drives from Windows and Linux images" \ `
 	"anydesk.install" "Anydesk" "Remote desktop software" \ `
 	"office365business" "Office 365" "Office 365 Business" \ `
-	"smartgit" "SmartGit" "Git client with support for GitHub Pull Requests+Comments, SVN and Mercurial" \ `
+	"github-desktop" "Github Desktop" "Git client with support for GitHub Pull Requests+Comments, SVN and Mercurial" \ `
 	"nagstamon" "Nagstamon" "Nagstamon is a status monitor for the desktop" \ `
 	"innosetup" "Inno Setup" "Free installer for Windows programs" \ `
 	"powertoys" "PowerToys" "Windows system utilities to maximize productivity" \ `
@@ -78,6 +78,7 @@ do
 	"phonerlite" "PhonerLite" "Easy to use VoIP softphone with profile and contact management" \ `
 	"victoria" "Victoria HDD-SSD" "HDD/SSD diagnostics, research, testing program" \ `
 	"amd-ryzen-chipset" "AMD Ryzen Chipset Drivers" "Drivers" \ `
+	"docker-desktop" "Docker Desktop" "A complete and easy-to-install desktop application for building, debugging and testing containerized apps on Windows" \ `
 	"tightvnc" "TightVNC" "Remote control software" \ `
 	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") --nocolor --limitoutput --no-progress -y
     } '3' {
@@ -104,7 +105,7 @@ do
 	"rufus" "Rufus" "Create bootable USB drives from Windows and Linux images" \ `
 	"anydesk.install" "Anydesk" "Remote desktop software" \ `
 	"office365business" "Office 365" "Office 365 Business" \ `
-	"smartgit" "SmartGit" "Git client with support for GitHub Pull Requests+Comments, SVN and Mercurial" \ `
+	"github-desktop" "Github Desktop" "Git client with support for GitHub Pull Requests+Comments, SVN and Mercurial" \ `
 	"nagstamon" "Nagstamon" "Nagstamon is a status monitor for the desktop" \ `
 	"innosetup" "Inno Setup" "Free installer for Windows programs" \ `
 	"powertoys" "PowerToys" "Windows system utilities to maximize productivity" \ `
@@ -130,6 +131,7 @@ do
 	"phonerlite" "PhonerLite" "Easy to use VoIP softphone with profile and contact management" \ `
 	"victoria" "Victoria HDD-SSD" "HDD/SSD diagnostics, research, testing program" \ `
 	"amd-ryzen-chipset" "AMD Ryzen Chipset Drivers" "Drivers" \ `
+	"docker-desktop" "Docker Desktop" "A complete and easy-to-install desktop application for building, debugging and testing containerized apps on Windows" \ `
 	"tightvnc" "TightVNC" "Remote control software" \ `
 	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") --nocolor --limitoutput --no-progress -y
     } '6' {
