@@ -78,7 +78,7 @@ do
 	"phonerlite" "PhonerLite" "Easy to use VoIP softphone with profile and contact management" \ `
 	"victoria" "Victoria HDD-SSD" "HDD/SSD diagnostics, research, testing program" \ `
 	"amd-ryzen-chipset" "AMD Ryzen Chipset Drivers" "Drivers" \ `
-	"atom" "Atom" "A hackable text editor for the 21st Century" \ `
+	"jekyll" "Jekyll" "Transform your plain text into static websites and blogs." \ `
 	"docker-desktop" "Docker Desktop" "A complete and easy-to-install desktop application for building, debugging and testing containerized apps on Windows" \ `
 	"tightvnc" "TightVNC" "Remote control software" \ `
 	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") --nocolor --limitoutput --no-progress -y
@@ -133,6 +133,7 @@ do
 	"victoria" "Victoria HDD-SSD" "HDD/SSD diagnostics, research, testing program" \ `
 	"amd-ryzen-chipset" "AMD Ryzen Chipset Drivers" "Drivers" \ `
 	"atom" "Atom" "A hackable text editor for the 21st Century" \ `
+	"jekyll" "Jekyll" "Transform your plain text into static websites and blogs." \ `
 	"docker-desktop" "Docker Desktop" "A complete and easy-to-install desktop application for building, debugging and testing containerized apps on Windows" \ `
 	"tightvnc" "TightVNC" "Remote control software" \ `
 	"doublecmd" "Double Commander" "Cross platform open source file manager with two panels side by side") --nocolor --limitoutput --no-progress -y
