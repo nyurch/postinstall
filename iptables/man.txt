@@ -1,0 +1,70 @@
+Вимкнути та видалити з автозавантаження firewalld(uwf) чи яку іншу надбудову над iptables
+systemctl stop firewalld(uwf)
+systemctl disable firewalld(uwf)
+
+Перегляд правил
+iptables -L -v -n
+
+Установити пакет з утилітами для роботи з iptables
+apt install iptables-services
+
+Додати iptables в автозавантаження та включити
+systemctl enable iptables.service
+systemctl start iptables.service
+
+Робимо файл з налаштуваннями для iptables
+nano /etc/iptables.sh
+
+Логи
+/var/log/messages
+
+Імпортувати налаштування
+iptables-save -t raw > your.file
+iptables-save -t mangle >> your.file
+iptables-save -t filter >> your.file
+Далі можна внести зміни в your.file і виконати
+iptables-restore < your.file
+
+
+Дуракозахист
+#!/bin/sh
+
+safeMode="y" # y/n
+if [ "$safeMode" = "y" ] ; then
+printf "\n Збереження вихыдних правил /etc/network/iptables.up.run ...\n"
+/sbin/iptables-save > /etc/network/iptables.up.run
+fi
+#===============================================================
+тут те що у iptables.sh
+#===============================================================
+if [ "$safeMode" != "y" ];then exit;fi
+printf "\n Нові правила таблиці filter:\n"
+$IPT -S
+printf "\n Нові правила таблиці nat:\n"
+$IPT -t nat -S
+printf "\n Нові правила таблиці mangle:\n"
+$IPT -t mangle -S
+rc() {
+old=$(stty -g)
+stty raw min 0 time 200
+printf '%s' $(dd bs=1 count=1 2>/dev/null)
+stty $old
+}
+printf "\n Відновити початкові правила? (Y/n) \n 25 сек до відновлення...: "
+answer=$(rc)
+if [ "$answer" = "n" ] || [ "$answer" = "N" ] ; then
+printf "\n Зберігаємо правила у файл /etc/network/iptables.up.rules ...\n"
+/sbin/iptables-save > /etc/network/iptables.up.rules
+exit
+fi
+printf "\n Відновлюємо початкові правила ...\n"
+/sbin/iptables-restore < /etc/network/iptables.up.run
+
+printf "\n Початкові правила таблиці filter:\n"
+$IPT -S
+printf "\n Початкові правила таблиці nat:\n"
+$IPT -t nat -S
+printf "\n Початкові правила таблиці mangle:\n"
+$IPT -t mangle -S
+
+відновить старі правила через 25 секунд якщо втратиться зв'язок і не буде підтвердження нових правил.
