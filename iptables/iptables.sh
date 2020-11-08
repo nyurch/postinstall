@@ -1,17 +1,40 @@
-﻿#!/bin/bash
+#!/bin/sh
 
-#Задаэмо змінні для спрощення скрипта
+#
+#Встановлюємо якщо немає iptables-persistent
+#при цьому у /etc/iptables генеруються rules.v4 та rules.v6, файли з правилами для IPv4 та IPv6
+#ці правила приміняються при перезавантаженні
+#якщо їх не буде загрузиться чистий iptables
+#
+
+#Задаємо змінні для спрощення скрипта
 #==============================================================================
 ## Фаєрвол
 export IPT="iptables"
-
+export IPT_SAVE="/usr/sbin/iptables-save"
+export IPT_RESTORE="/usr/sbin/iptables-restore"
+export IPT_BACKUP="/etc/iptables"
+export IPT_RULES="/etc/iptables"
 ## Інтерфейс із зовнішнім ip та сам ip
-export WAN=eth0
-export WAN_IP=127.0.0.1
+#export WAN=enp0s3
+#export WAN_IP=10.0.2.15
 
 ## Локальні інтерфейс та мережа
-export LAN1=eth1
-export LAN1_IP_RANGE=10.0.0.0/24
+export LAN1=enp0s3
+export LAN1_IP_RANGE=10.0.2.0/24
+#==============================================================================
+
+#Бекапимо правила на випадок косяків.
+#Є 2 моменти
+#iptables-save може знаходитися в різних місцях у різних дистрибутивах(наприклад /usr/sbin/iptables-save чи /sbin/iptables-save)
+#запис у /etc/iptables може бути заборонений навіть через sudo.
+#працюємо під рутом sudo su
+#==============================================================================
+safeMode="y" # y/n
+if [ "$safeMode" = "y" ] ; then
+printf "\n Збереження вихідних правил ...\n"
+$IPT_SAVE > $IPT_BACKUP/rules.v4.backup
+fi
 #==============================================================================
 
 #Базові налаштування
@@ -42,7 +65,7 @@ $IPT -A INPUT -p icmp --icmp-type time-exceeded -j ACCEPT
 $IPT -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 
 ## Дозволити трафік з внутрішньої мережі у світ
-$IPT -A OUTPUT -o $WAN -j ACCEPT
+#$IPT -A OUTPUT -o $WAN -j ACCEPT
 ## Розкоментувати щоб дозволити вхідні з'єднання сервера. Не рекомендовано.
 # $IPT -A INPUT -i $WAN -j ACCEPT
 
@@ -50,6 +73,9 @@ $IPT -A OUTPUT -o $WAN -j ACCEPT
 $IPT -A INPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
 $IPT -A OUTPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
 $IPT -A FORWARD -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+## Ввімкнути франментацію пакетів, що необхідно через різні значення MTU
+#$IPT -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 #==============================================================================
 
 #Деякий захист від мамкиних хакерів
@@ -66,7 +92,8 @@ $IPT -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
 $IPT -A OUTPUT -p tcp ! --syn -m state --state NEW -j DROP
 
 ## Заборона вказаних ip
-#$IPT -A INPUT -s 1.1.1.1 -j REJECT
+#$IPT -A INPUT -s 10.0.0.2 -j REJECT
+#$IPT -A OUTPUT -s 10.0.0.2 -j REJECT
 #==============================================================================
 
 #Прокинути порт зі світу в локалку
@@ -80,20 +107,20 @@ $IPT -A OUTPUT -p tcp ! --syn -m state --state NEW -j DROP
 #Обмін між світом і локалкою.
 #==============================================================================
 ## Вихідні з локалки дозволено.
-$IPT -A FORWARD -i $LAN1 -o $WAN -j ACCEPT
+#$IPT -A FORWARD -i $LAN1 -o $WAN -j ACCEPT
 ## Ззовні в локалку заборонено.
-$IPT -A FORWARD -i $WAN -o $LAN1 -j REJECT
+#$IPT -A FORWARD -i $WAN -o $LAN1 -j REJECT
 #==============================================================================
 
 #Вмикаємо NAT для доступу локалки до світу
 #==============================================================================
-$IPT -t nat -A POSTROUTING -o $WAN -s $LAN1_IP_RANGE -j MASQUERADE
+#$IPT -t nat -A POSTROUTING -o $WAN -s $LAN1_IP_RANGE -j MASQUERADE
 #==============================================================================
 
 #Відкриваємо порти
 #==============================================================================
 ## SSH
-$IPT -A INPUT -i $WAN -p tcp --dport 22 -j ACCEPT
+#$IPT -A INPUT -i $WAN -p tcp --dport 22 -j ACCEPT
 
 ## Пошта
 #$IPT -A INPUT -p tcp -m tcp --dport 25 -j ACCEPT
@@ -113,6 +140,14 @@ $IPT -A INPUT -i $WAN -p tcp --dport 22 -j ACCEPT
 
 #Ввімкнути логи
 #==============================================================================
+#Встановлюємо rsyslog якщо немає
+#створюємо конфігі для rsyslog
+#sudo touch /etc/rsyslog.d/10-iptables_in.conf
+#у файлах конфігурації додаємо 2 рядки
+#
+#:msg, contains, "iptables block_in: " -/var/log/iptables_in.log
+#& ~
+#
 $IPT -N block_in
 $IPT -N block_out
 $IPT -N block_fw
@@ -121,15 +156,43 @@ $IPT -A INPUT -j block_in
 $IPT -A OUTPUT -j block_out
 $IPT -A FORWARD -j block_fw
 
-$IPT -A block_in -j LOG --log-level info --log-prefix "--IN--BLOCK"
+$IPT -A block_in -j LOG --log-level info --log-prefix "iptables block_in: "
 $IPT -A block_in -j DROP
-$IPT -A block_out -j LOG --log-level info --log-prefix "--OUT--BLOCK"
+$IPT -A block_out -j LOG --log-level info --log-prefix "iptables block_out: "
 $IPT -A block_out -j DROP
-$IPT -A block_fw -j LOG --log-level info --log-prefix "--FW--BLOCK"
+$IPT -A block_fw -j LOG --log-level info --log-prefix "iptables block_fw: "
 $IPT -A block_fw -j DROP
 #==============================================================================
 
-#Зберегти правила.
-#==============================================================================
-/sbin/iptables-save  > /etc/sysconfig/iptables
-#==============================================================================ф
+
+#===============================================================
+if [ "$safeMode" != "y" ];then exit;fi
+printf "\n Нові правила таблиці filter:\n"
+$IPT -S
+printf "\n Нові правила таблиці nat:\n"
+$IPT -t nat -S
+printf "\n Нові правила таблиці mangle:\n"
+$IPT -t mangle -S
+rc() {
+old=$(stty -g)
+stty raw min 0 time 200
+printf '%s' $(dd bs=1 count=1 2>/dev/null)
+stty $old
+}
+printf "\n Відновити початкові правила? (Y/n) \n 25 сек до відновлення...: "
+answer=$(rc)
+if [ "$answer" = "n" ] || [ "$answer" = "N" ] ; then
+printf "\n Зберігаємо правила у файл /etc/iptables/rules.v4 ...\n"
+$IPT_SAVE > $IPT_RULES/rules.v4
+exit
+fi
+printf "\n Відновлюємо початкові правила ...\n"
+$IPT_RESTORE < $IPT_BACKUP/rules.v4.backup
+
+printf "\n Початкові правила таблиці filter:\n"
+$IPT -S
+printf "\n Початкові правила таблиці nat:\n"
+$IPT -t nat -S
+printf "\n Початкові правила таблиці mangle:\n"
+$IPT -t mangle -S
+
