@@ -1,5 +1,5 @@
 #!/bin/bash
-# Шапка-костиль, нічого не використовується.
+#Шапка-костиль, нічого не використовується.
 ROOT_UID=0 #Лише користувач з $UID 0 має права root.
 E_XCD=86 #Неможливо змінити директорію?
 E_NOTROOT=87 #Вихід з помилкою "не root".
@@ -7,15 +7,14 @@ E_NOTROOT=87 #Вихід з помилкою "не root".
 clear
 echo "$(tput bold)$(tput setaf 1)Варіанти запуску:"
 echo "===========================================================$(tput sgr0)"
-echo -e "\t$(tput bold)$(tput setaf 3)[1]$(tput sgr0) Задати проксі                                 "
-echo -e "\t$(tput bold)$(tput setaf 3)[2]$(tput sgr0) Очистити проксі                               "
-echo -e "\t$(tput bold)$(tput setaf 3)[3]$(tput sgr0) Оновити систему                               "
-echo -e "\t$(tput bold)$(tput setaf 3)[4]$(tput sgr0) Очистити кеш apt та видалити застарілі файли  "
-echo -e "\t$(tput bold)$(tput setaf 3)[5]$(tput sgr0) Вибір програм для встановлення(ppa)           "
-echo -e "\t$(tput bold)$(tput setaf 3)[6]$(tput sgr0) Вибір програм для встановлення(snap)          "
-echo -e "\t$(tput bold)$(tput setaf 3)[7]$(tput sgr0) Установка Anydesk                             "
-echo -e "\t$(tput bold)$(tput setaf 3)[8]$(tput sgr0) Інтерфейс та bash з блек-джеком               "
-echo -e "\t$(tput bold)$(tput setaf 3)[0]$(tput sgr0) Вихід                                         "
+echo -e "\t$(tput bold)$(tput setaf 3)[1]$(tput sgr0) Задати проксі                                         "
+echo -e "\t$(tput bold)$(tput setaf 3)[2]$(tput sgr0) Очистити проксі                                       "
+echo -e "\t$(tput bold)$(tput setaf 3)[3]$(tput sgr0) Встановити додаткові репозиторії та Оновити систему   "
+echo -e "\t$(tput bold)$(tput setaf 3)[4]$(tput sgr0) Очистити кеш apt та видалити застарілі файли          "
+echo -e "\t$(tput bold)$(tput setaf 3)[5]$(tput sgr0) Вибір програм для встановлення(ppa)                   "
+echo -e "\t$(tput bold)$(tput setaf 3)[6]$(tput sgr0) Вибір програм для встановлення(snap)                  "
+echo -e "\t$(tput bold)$(tput setaf 3)[7]$(tput sgr0) Інтерфейс та bash з блек-джеком                       "
+echo -e "\t$(tput bold)$(tput setaf 3)[0]$(tput sgr0) Вихід                                                 "
 echo -e "$(tput bold)$(tput setaf 1)===========================================================\n$(tput sgr0)"
 echo -n "$(tput bold)$(tput setaf 2)Обрати варіант:$(tput sgr0) "; read doing
 
@@ -55,6 +54,18 @@ sudo mv /etc/environment.bak /etc/environment
 3)
 clear
 echo -e "\n"
+echo "Встановлення додаткових репозиторіїв"
+echo -e "\n"
+# GitHub Desktop
+sudo wget -qO - https://packagecloud.io/shiftkey/desktop/gpgkey | sudo tee /etc/apt/trusted.gpg.d/shiftkey-desktop.asc > /dev/null
+sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/shiftkey/desktop/any/ any main" > /etc/apt/sources.list.d/packagecloud-shiftky-desktop.list'
+# Anydesk
+sudo wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo apt-key add -
+sudo sh -c "echo 'deb http://deb.anydesk.com/ all main' > /etc/apt/sources.list.d/anydesk-stable.list"
+# Atom Editor
+sudo wget -qO - https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -
+sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" > /etc/apt/sources.list.d/atom.list'
+echo -e "\n"
 echo "Оновлення дистрибутиву"
 echo -e "\n"
 sudo apt update && sudo apt dist-upgrade -y
@@ -74,12 +85,15 @@ echo -e "\n"
 sudo apt install -y $(zenity --list --text="ВИБРАТИ ПРОГРАМИ ДЛЯ ВСТАНОВЛЕННЯ:" \
     --checklist --multiple --column "Вибір" --column "Програма" --separator=" " --column "Опис"\
     FALSE "alarm-clock-applet" "Fully-featured alarm clock"\
+    FALSE "anydesk" "Anydesk Remote Connect"\
+    FALSE "atom" "Atom Editor"\
     FALSE "audacity" "Graphical cross-platform audio editor"\
     FALSE "calibre" "E-book converter and library management"\
     FALSE "clipit" "Lightweight GTK+ Clipboard Manager"\
     FALSE "dropbox" "File hosting service"\
     FALSE "easytag" "Tag editor for MP3, Ogg Vorbis files and more"\
     FALSE "faenza-icon-theme" "Faenza icon theme"\
+    FALSE "github-desktop" "GitHub Desktop"\
     FALSE "gimp" "An image manipulation and paint program"\
     FALSE "glances" "Curses-based monitoring tool"\
     FALSE "gnome-nettool" "Network information tool for GNOME"\
@@ -116,16 +130,6 @@ sudo snap install $(zenity --list --text="ВИБРАТИ ПРОГРАМИ ДЛЯ
 7)
 clear
 echo -e "\n"
-echo "Встановлення Anydesk"
-echo -e "\n"
-sudo wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo apt-key add -
-sudo sh -c "echo 'deb http://deb.anydesk.com/ all main' > /etc/apt/sources.list.d/anydesk-stable.list"
-sudo apt update
-sudo apt install -y anydesk
-;;
-8)
-clear
-echo -e "\n"
 echo -e "Налаштування інтерфейсу\n"
 sudo apt install faenza-icon-theme
 xfconf-query -c xfce4-desktop -p /desktop-icons/file-icons/show-home -t 'bool' -s 'false'
@@ -133,7 +137,7 @@ xfconf-query -c xsettings -p /Net/IconThemeName -s "Faenza-Radiance"
 xfconf-query -c xsettings -pxfconf-query -c xsettings -p /Net/ThemeName -s "Mint-X-Orange"
 echo -e "\n"
 echo -e "Налаштування bash\n"
-sed -i '$ a \\nPromt color\\nexport PS1="\\[$(tput bold)$(tput setab 7)$(tput setaf 5)\\][\\D{%m/%d/%Y} \\A] \\[$(tput setaf 1)\\]\\u@\\h:\\[$(tput setaf 4)\\]\\w $ \\[$(tput sgr0)\\] "' ~/.bashrc
+sed -i '$ a \\n#Promt color\nexport PS1="\\[$(tput bold)$(tput setab 7)$(tput setaf 5)\\][\\D{%m/%d/%Y} \\A] \\[$(tput setaf 1)\\]\\u@\\h:\\[$(tput setaf 4)\\]\\w $ \\[$(tput sgr0)\\] "' ~/.bashrc
 ;;
 0)
 clear && exit 0
@@ -145,4 +149,4 @@ echo -e "\n"
 
 esac
 
-sleep 1 && ./case.sh
+sleep 1 && ./case_xfce.sh
