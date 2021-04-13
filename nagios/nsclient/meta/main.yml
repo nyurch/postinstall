@@ -1,0 +1,13 @@
+galaxy_info:
+  author: nicolas yurchuk
+  description: install and configure nsclient++
+  company: home
+
+  license: MIT
+
+  min_ansible_version: 2.9
+
+  galaxy_tags: []
+
+dependencies: []
+  

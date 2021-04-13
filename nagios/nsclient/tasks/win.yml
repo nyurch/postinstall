@@ -1,0 +1,16 @@
+---
+    - name: Install NSClient++
+      win_chocolatey:
+        name: nscp
+        state: present
+
+    - name: Copy config file
+      win_copy:
+        src: files/nsclient.ini
+        dest: C:\Program Files\NSClient++\nsclient.ini
+        backup: yes
+
+    - name: Restart NSClient++ Monitoring Agent
+      win_service:
+        name: nscp
+        state: restarted

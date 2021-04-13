@@ -1,0 +1,14 @@
+---
+# tasks file for install_standart_pack
+#- name: install for RPM-based system
+#  import_tasks: rpm.yml
+#  when: ansible_facts['os_family']|lower == 'redhat'
+
+#- name: install for DEB-based system
+#  import_tasks: deb.yml
+#  when: ansible_facts['os_family']|lower == 'debian'
+
+- name: install for WIN-based system
+  import_tasks: win.yml
+  when: ansible_facts['os_family']|lower == 'windows'
+
